@@ -94,4 +94,36 @@ class AccountVatESLWizard(models.TransientModel):
 
         # return self.pool['report'].get_action(cr, uid, [], 'account.report_vat', data=datas, context=context)
 
+    def declaration_year(self):
+        """Return year of declaration in YYYY format."""
+        pass
+
+    def declaration_month(self):
+        """Return month of declaration in MM format."""
+        pass
+
+    @api.multi
+    def esl_csv(self):
+        """Return the CSV in HMRC-compatible format as a list of rows.
+        """
+        self.ensure_one()
+
+        company = self.chart_tax_id.company_id
+        title_record = ['HMRC_CAT_ESL_BULK_SUBMISSION_FILE']
+        header_record = [
+            company.vat,
+            company.subsidiary_identifier,
+            self.declaration_year(),
+            self.declaration_month(),
+            'GBP',
+            company.name[:35],      # NOTE This may not be sufficient
+        ]
+        line_records = [
+            # TODO
+        ]
+        return [
+            title_record,
+            header_record,
+        ] + line_records
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
