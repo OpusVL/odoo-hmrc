@@ -66,6 +66,8 @@ class AccountVatESLWizard(models.TransientModel):
 
     @api.multi
     def create_esl(self):
+        """This should be triggered by the form.
+        """
         self.ensure_one()
 
         # TODO Return the action that will trigger the query and its CSV download
