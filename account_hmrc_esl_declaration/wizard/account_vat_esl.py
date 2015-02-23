@@ -52,15 +52,14 @@ class AccountVatESLWizard(models.TransientModel):
         comodel_name='account.tax.code',
         string='Chart of Tax',
         required=True,
-        domain=[('parent_id', '=', False)],
         default=methodcaller('_default_chart_of_taxes'),
     )
 
     def _default_chart_of_taxes(self):
         taxes = self.env['account.tax.code'].search(
             [
-                ('parent_id', '=', False),      # The root of a chart of taxes
                 ('company_id', '=', self.env.user.company_id.id),
+                ('name', '=ilike', '%Total value of EC sales, ex VAT%'),
             ],
             limit=1,
         )
