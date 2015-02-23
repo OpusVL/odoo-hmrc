@@ -22,7 +22,6 @@
 
 from . import (
     company,
-    partner,
     wizard,
 )
 

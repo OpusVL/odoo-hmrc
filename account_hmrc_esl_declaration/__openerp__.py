@@ -39,7 +39,6 @@
     ],
     'data': [
         'company_view.xml',
-        'partner_view.xml',
         'wizard/account_vat_esl.xml',
     ],
     'demo': [
