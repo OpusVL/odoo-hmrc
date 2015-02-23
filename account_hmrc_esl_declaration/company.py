@@ -20,33 +20,16 @@
 #
 ##############################################################################
 
+from openerp import models, fields, api
 
-{
-    'name': 'ECSL Export for HMRC',
-    'version': '0.1',
-    'author': 'OpusVL',
-    'website': 'http://opusvl.com/',
-    'summary': "EC Sales List Export for Her Majesty's Revenue and Customs",
-    
-    'category': 'Accounting',
-    
-    'description': """EC Sales List Export for Her Majesty's Revenue and Customs,
-""",
-    'images': [
-    ],
-    'depends': [
-    ],
-    'data': [
-        'company_view.xml',
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'license': 'AGPL-3',
-    'installable': True,
-    'auto_install': False,
+class ResCompanyHMRC(models.Model):
+    _inherit = 'res.company'
 
-}
+    subsidiary_identifier = fields.Char(
+        size=3,
+        required=True,
+        default='000',
+        help='for HMRC documents such as the ESL declaration.  If you have, none, set to 000',
+    )
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
