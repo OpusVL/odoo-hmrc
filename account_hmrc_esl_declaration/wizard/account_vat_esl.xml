@@ -3,6 +3,9 @@
     <data>
 
         <record id="view_esl_declaration_wizard" model="ir.ui.view">
+            <!-- Based on odoo/addons/account/wizard/account_vat_view.xml from upstream Odoo.
+                Code used and modified under AGPL v3.
+            -->
             <field name="name">ESL Declaration</field>
             <field name="model">account.vat.esl</field>
             <field name="arch" type="xml">

@@ -23,6 +23,9 @@
 from openerp import models, fields, api
 
 class AccountVatESLWizard(models.TransientModel):
+    # Based on odoo/addons/account/wizard/account_vat_view.xml from upstream Odoo.
+    # Code used and modified under AGPL v3.
+
     _name = 'account.vat.esl'
     _description = 'EC Sales Declaration'
     _inherit = 'account.common.report'
