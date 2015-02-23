@@ -96,13 +96,13 @@ class AccountVatESLWizard(models.TransientModel):
 
     def declaration_year(self):
         """Return year of declaration in YYYY format."""
-        # NOTE This assumes period is in YYYY/MM format
-        return self.period_from.name.split('/')[0]
+        # NOTE This assumes period is in MM/YYYY format
+        return self.period_from.name.split('/')[1]
 
     def declaration_month(self):
         """Return month of declaration in MM format."""
-        # NOTE This assumes period is in YYYY/MM format
-        return self.period_from.name.split('/')[1]
+        # NOTE This assumes period is in MM/YYYY format
+        return self.period_from.name.split('/')[0]
 
     @api.multi
     def esl_csv(self):
