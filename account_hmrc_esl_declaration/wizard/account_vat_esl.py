@@ -22,6 +22,8 @@
 
 from openerp import models, fields, api
 
+from operator import methodcaller
+
 class AccountVatESLWizard(models.TransientModel):
     # Based on odoo/addons/account/wizard/account_vat_view.xml from upstream Odoo.
     # Code used and modified under AGPL v3.
@@ -49,7 +51,18 @@ class AccountVatESLWizard(models.TransientModel):
         string='Chart of Tax',
         required=True,
         domain=[('parent_id', '=', False)],
+        default=methodcaller('_default_chart_of_taxes'),
     )
+
+    def _default_chart_of_taxes(self):
+        taxes = self.env['account.tax.code'].search(
+            [
+                ('parent_id', '=', False),      # The root of a chart of taxes
+                ('company_id', '=', self.env.user.company_id.id),
+            ],
+            limit=1,
+        )
+        return taxes and taxes.id or False
 
     @api.multi
     def create_esl(self):
