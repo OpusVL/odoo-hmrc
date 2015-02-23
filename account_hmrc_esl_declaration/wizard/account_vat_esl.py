@@ -104,8 +104,8 @@ class AccountVatESLWizard(models.TransientModel):
         return self.period_from.name.split('/')[0]
 
     @api.multi
-    def esl_csv(self):
-        """Return the CSV in HMRC-compatible format as a list of rows.
+    def esl_csv_records(self):
+        """Return the CSV records in HMRC-compatible format as a list of rows.
         """
         self.ensure_one()
 
@@ -117,7 +117,7 @@ class AccountVatESLWizard(models.TransientModel):
             self.declaration_year(),
             self.declaration_month(),
             'GBP',
-            company.name[:35],  # NOTE truncating might not be sufficient
+            company.name[:35], # NOTE truncating might not be sufficient
         ]
         line_records = [
             # TODO
