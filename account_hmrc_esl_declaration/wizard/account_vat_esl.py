@@ -20,36 +20,34 @@
 #
 ##############################################################################
 
+from openerp import models, fields, api
 
-{
-    'name': 'ECSL Export for HMRC',
-    'version': '0.1',
-    'author': 'OpusVL',
-    'website': 'http://opusvl.com/',
-    'summary': "EC Sales List Export for Her Majesty's Revenue and Customs",
-    
-    'category': 'Accounting',
-    
-    'description': """EC Sales List Export for Her Majesty's Revenue and Customs,
-""",
-    'images': [
-    ],
-    'depends': [
-        'account',
-    ],
-    'data': [
-        'company_view.xml',
-        'partner_view.xml',
-        'wizard/account_vat_esl.xml',
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'license': 'AGPL-3',
-    'installable': True,
-    'auto_install': False,
+class AccountVatESLWizard(models.TransientModel):
+    _name = 'account.vat.esl'
+    _description = 'EC Sales Declaration'
+    _inherit = 'account.common.report'
 
-}
+    based_on = fields.Selection(
+        selection=[
+            ('invoices', 'Invoices'),
+            ('payments', 'Payments'),
+        ],
+        string='Based on',
+        required=True,
+    )
+
+    chart_tax_id = fields.Many2one(
+        comodel_name='account.tax.code',
+        string='Chart of Tax',
+        required=True,
+        domain=[('parent_id', '=', False)],
+    )
+
+    @api.multi
+    def create_esl(self):
+        self.ensure_one()
+
+        # TODO Return the action that will trigger the query and its CSV download
+        return False
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -20,36 +20,8 @@
 #
 ##############################################################################
 
-
-{
-    'name': 'ECSL Export for HMRC',
-    'version': '0.1',
-    'author': 'OpusVL',
-    'website': 'http://opusvl.com/',
-    'summary': "EC Sales List Export for Her Majesty's Revenue and Customs",
-    
-    'category': 'Accounting',
-    
-    'description': """EC Sales List Export for Her Majesty's Revenue and Customs,
-""",
-    'images': [
-    ],
-    'depends': [
-        'account',
-    ],
-    'data': [
-        'company_view.xml',
-        'partner_view.xml',
-        'wizard/account_vat_esl.xml',
-    ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'license': 'AGPL-3',
-    'installable': True,
-    'auto_install': False,
-
-}
+from . import (
+    account_vat_esl,
+)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
