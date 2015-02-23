@@ -123,9 +123,6 @@ class AccountVatESLWizard(models.TransientModel):
         line_records = [
             # TODO
         ]
-        return [
-            title_record,
-            header_record,
-        ] + line_records
+        return [ title_record, header_record ] + line_records
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
