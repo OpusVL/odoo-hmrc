@@ -38,6 +38,7 @@
     ],
     'data': [
         'company_view.xml',
+        'partner_view.xml',
     ],
     'demo': [
     ],
