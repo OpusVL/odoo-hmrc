@@ -32,6 +32,8 @@ class AccountVatESLWizard(models.TransientModel):
     _description = 'EC Sales Declaration'
     _inherit = 'account.common.report'
 
+    period_from = fields.Many2one(string='Period', required=True)
+
     based_on = fields.Selection(
         # Looking at how account.vat.declaration uses this, I think this field may be completely
         # redundant.  It's in the model, but hidden to the user in the UI.  So perhaps only
