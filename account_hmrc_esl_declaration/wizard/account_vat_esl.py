@@ -32,7 +32,7 @@ class AccountVatESLWizard(models.TransientModel):
     _description = 'EC Sales Declaration'
     _inherit = 'account.common.report'
 
-    period_from = fields.Many2one(string='Period', required=True)
+    period_from = fields.Many2one(string='Period', required=True)   # We only care about one period
 
     based_on = fields.Selection(
         # Looking at how account.vat.declaration uses this, I think this field may be completely
