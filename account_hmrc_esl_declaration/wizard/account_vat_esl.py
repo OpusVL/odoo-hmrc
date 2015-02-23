@@ -96,11 +96,13 @@ class AccountVatESLWizard(models.TransientModel):
 
     def declaration_year(self):
         """Return year of declaration in YYYY format."""
-        pass
+        # NOTE This assumes period is in YYYY/MM format
+        return self.period_from.name.split('/')[0]
 
     def declaration_month(self):
         """Return month of declaration in MM format."""
-        pass
+        # NOTE This assumes period is in YYYY/MM format
+        return self.period_from.name.split('/')[1]
 
     @api.multi
     def esl_csv(self):
@@ -116,7 +118,7 @@ class AccountVatESLWizard(models.TransientModel):
             self.declaration_year(),
             self.declaration_month(),
             'GBP',
-            company.name[:35],      # NOTE This may not be sufficient
+            company.name[:35],  # NOTE truncating might not be sufficient
         ]
         line_records = [
             # TODO
