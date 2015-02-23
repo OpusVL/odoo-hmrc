@@ -25,7 +25,7 @@ from openerp import models, fields, api
 from operator import methodcaller
 
 class AccountVatESLWizard(models.TransientModel):
-    # Based on odoo/addons/account/wizard/account_vat_view.xml from upstream Odoo.
+    # Based on odoo/addons/account/wizard/account_vat.py from upstream Odoo.
     # Code used and modified under AGPL v3.
 
     _name = 'account.vat.esl'
@@ -72,5 +72,24 @@ class AccountVatESLWizard(models.TransientModel):
 
         # TODO Return the action that will trigger the query and its CSV download
         return False
+
+        # Here's the create_vat() code from upstream - some of it may be relevant here
+        # if context is None:
+        #     context = {}
+
+        # datas = {'ids': context.get('active_ids', [])}
+        # datas['model'] = 'account.tax.code'
+        # datas['form'] = self.read(cr, uid, ids, context=context)[0]
+
+        # for field in datas['form'].keys():
+        #     if isinstance(datas['form'][field], tuple):
+        #         datas['form'][field] = datas['form'][field][0]
+
+        # taxcode_obj = self.pool.get('account.tax.code')
+        # taxcode_id = datas['form']['chart_tax_id']
+        # taxcode = taxcode_obj.browse(cr, uid, [taxcode_id], context=context)[0]
+        # datas['form']['company_id'] = taxcode.company_id.id
+
+        # return self.pool['report'].get_action(cr, uid, [], 'account.report_vat', data=datas, context=context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
