@@ -28,12 +28,17 @@ class AccountVatESLWizard(models.TransientModel):
     _inherit = 'account.common.report'
 
     based_on = fields.Selection(
+        # Looking at how account.vat.declaration uses this, I think this field may be completely
+        # redundant.  It's in the model, but hidden to the user in the UI.  So perhaps only
+        # 'invoices' makes sense here.
+        default='invoices',
+        required=True,
+        readonly=True,
         selection=[
             ('invoices', 'Invoices'),
             ('payments', 'Payments'),
         ],
         string='Based on',
-        required=True,
     )
 
     chart_tax_id = fields.Many2one(
