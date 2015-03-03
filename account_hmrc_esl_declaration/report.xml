@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="esl_csv" model="ir.actions.report.xml">
+            <field name="model">account.vat.esl</field>
+            <field name="name">ESL CSV</field>
+            <field name="report_type">controller</field>
+            <field name="report_rml">/hmrc/esl</field>
+            <field name="report_name">account_hmrc_esl_declaration.esl_csv</field>
+        </record>
+    </data>
+</openerp>

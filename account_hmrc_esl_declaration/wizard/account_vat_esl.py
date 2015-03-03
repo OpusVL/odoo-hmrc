@@ -22,7 +22,13 @@
 
 from openerp import models, fields, api
 
+import csv
 from operator import methodcaller
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 class AccountVatESLWizard(models.TransientModel):
     # Based on odoo/addons/account/wizard/account_vat.py from upstream Odoo.
@@ -72,7 +78,7 @@ class AccountVatESLWizard(models.TransientModel):
         self.ensure_one()
 
         # TODO Return the action that will trigger the query and its CSV download
-        return False
+        return self.env['report'].get_action(self, 'account_hmrc_esl_declaration.esl_csv')
 
         # Here's the create_vat() code from upstream - some of it may be relevant here
         # if context is None:
@@ -123,5 +129,13 @@ class AccountVatESLWizard(models.TransientModel):
             # TODO
         ]
         return [ title_record, header_record ] + line_records
+
+    @api.multi
+    def esl_csv_data(self):
+        """Return the CSV data as a string.
+        """
+        data = StringIO()
+        csv.writer(data).writerows(self.esl_csv_records())
+        return data.getvalue()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
