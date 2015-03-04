@@ -20,15 +20,18 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-
 import csv
+import re
 from operator import methodcaller
 
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
+
+from openerp import models, fields, api
+
+from ..maybe import odoo_maybe
 
 _INDICATOR_MAP = {
     # Mapping from transaction_indicator_type to the code used in the CSV file
@@ -105,7 +108,7 @@ class AccountVatESLWizard(models.TransientModel):
         company = self.chart_tax_id.company_id
         title_record = ['HMRC_CAT_ESL_BULK_SUBMISSION_FILE']
         header_record = [
-            company.vat,
+            odoo_maybe(company.vat, strip_leading_letters),
             company.subsidiary_identifier,
             self.declaration_year(),
             self.declaration_month(),
@@ -128,5 +131,14 @@ class AccountVatESLWizard(models.TransientModel):
         data = StringIO()
         csv.writer(data).writerows(self.esl_csv_records())
         return data.getvalue()
+
+
+def strip_leading_letters(instr):
+    """Strip the leading letters off a string.
+
+    >>> strip_leading_letters('GB12345678')
+    '12345678'
+    """
+    return re.sub(r'^[A-Z]+', r'', instr, count=1)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
