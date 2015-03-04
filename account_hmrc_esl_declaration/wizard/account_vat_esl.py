@@ -30,6 +30,13 @@ try:
 except ImportError:
     from StringIO import StringIO
 
+_INDICATOR_MAP = {
+    # Mapping from transaction_indicator_type to the code used in the CSV file
+    'b2b_goods': '0',
+    'triangular': '2',
+    'b2b_services': '3',
+}
+
 class AccountVatESLWizard(models.TransientModel):
     # Based on odoo/addons/account/wizard/account_vat.py from upstream Odoo.
     # Code used and modified under AGPL v3.
