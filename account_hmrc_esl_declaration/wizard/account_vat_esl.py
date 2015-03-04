@@ -83,28 +83,8 @@ class AccountVatESLWizard(models.TransientModel):
         """This should be triggered by the form.
         """
         self.ensure_one()
-
-        # TODO Return the action that will trigger the query and its CSV download
         return self.env['report'].get_action(self, 'account_hmrc_esl_declaration.esl_csv')
 
-        # Here's the create_vat() code from upstream - some of it may be relevant here
-        # if context is None:
-        #     context = {}
-
-        # datas = {'ids': context.get('active_ids', [])}
-        # datas['model'] = 'account.tax.code'
-        # datas['form'] = self.read(cr, uid, ids, context=context)[0]
-
-        # for field in datas['form'].keys():
-        #     if isinstance(datas['form'][field], tuple):
-        #         datas['form'][field] = datas['form'][field][0]
-
-        # taxcode_obj = self.pool.get('account.tax.code')
-        # taxcode_id = datas['form']['chart_tax_id']
-        # taxcode = taxcode_obj.browse(cr, uid, [taxcode_id], context=context)[0]
-        # datas['form']['company_id'] = taxcode.company_id.id
-
-        # return self.pool['report'].get_action(cr, uid, [], 'account.report_vat', data=datas, context=context)
 
     def declaration_year(self):
         """Return year of declaration in YYYY format."""
