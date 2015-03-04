@@ -18,7 +18,7 @@ Current status is that the CSV headers can be got OK but there are no detail lin
 Also you need to provide your own logic to decide on whether a transaction is Triangular,
 B2B Goods or B2B Services, or install `account_hmrc_constant_indicator`.
 
-To provide your own logic, you must add `account_hmrc_esl_declaration` to an Odoo addon of your
+To provide your own logic, you must add `account_hmrc_esl_declaration` to the dependencies of an Odoo addon of your
 own, do an `_inherit = 'account.move.line'` and implement the method `_transaction_indicator_type_compute`.
 
 In the future, we may develop a default implementation that will calculate the correct transaction type
