@@ -1,10 +1,17 @@
 # odoo-hmrc
 
+Tools to assist you with data submissions to Her Majesty's Revenue and Customs.
+
+Currently this module contains the ESL declaration and a sample module for
+deciding the Indicator Code to use on those declarations.
 
 ## `account_hmrc_esl_declaration`
 WORK IN PROGRESS: ESL export for HMRC
 
 Please note this module is under development, and does not yet work.
+
+When it does, it will provide you with a tool to export a CSV file in the correct
+format for electronically submitting your ESL declaration (VAT101) to HMRC online.
 
 Current status is that the CSV headers can be got OK but there are no detail lines.
 
@@ -19,7 +26,7 @@ from other aspects of the move line.
 However our current contract's requirement is to provide a constant one, which is implemented in
 the `account_hmrc_constant_indicator` module detailed below.
 
-### Current limitations
+### Current status and limitations
 
 * Currently this only outputs the two header lines.  The algorithm for calculating the detail lines remains to be written.
 * Currently, there is only one implementation of the logic to choose the Indicator Code, and that is in `account_hmrc_constant_indicator`.  The default implementation is abstract, so you need to install the aforementioned constant indicator module or write your own.  If another implementation is found that reliably makes the right choice for any installation, we may make that implementation the default.
