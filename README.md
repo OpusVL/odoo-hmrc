@@ -40,6 +40,8 @@ field.
 As a result of installing this, each company can have either 'B2B Goods', 'B2B Services' or
 'Triangular' selected, and this will be the only type of line that is output.
 
+You can find this setting in Settings -> Companies -> `Your Company` -> Configuration
+
 You could also use this as an example of how to get started writing your own version of
 `_transaction_indicator_type_compute`.
 
