@@ -114,7 +114,7 @@ class AccountVatESLWizard(models.TransientModel):
             self.declaration_month(),
             'GBP',
             company.name[:35], # NOTE truncating might not be sufficient
-            '0',               # "the indicator field (this will always be '0')"
+            '0',    # "the indicator field (this will always be '0')"
         ]
         return [ title_record, header_record ] + self._detail_records()
 
