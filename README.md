@@ -19,6 +19,11 @@ from other aspects of the move line.
 However our current contract's requirement is to provide a constant one, which is implemented in
 the `account_hmrc_constant_indicator` module detailed below.
 
+### Current limitations
+
+* Currently this only outputs the two header lines.  The algorithm for calculating the detail lines remains to be written.
+* Currently, there is only one implementation of the logic to choose the Indicator Code, and that is in `account_hmrc_constant_indicator`.  The default implementation is abstract, so you need to install the aforementioned constant indicator module or write your own.  If another implementation is found that reliably makes the right choice for any installation, we may make that implementation the default.
+
 ## `account_hmrc_constant_indicator`
 
 This provides an implementation of `_transaction_indicator_type_compute` which gets
@@ -30,3 +35,10 @@ As a result of installing this, each company can have either 'B2B Goods', 'B2B S
 
 You could also use this as an example of how to get started writing your own version of
 `_transaction_indicator_type_compute`.
+
+
+## Current overall limitations
+
+Apart from limitations given under individual addons' sections above:
+
+* The API and addon structure is in flux.  We may refactor these in such a way that, for example, if you implement your own `_transaction_indicator_type_compute`, and import the `INDICATOR_SELECTION` list, you may have to change the import in the future.
