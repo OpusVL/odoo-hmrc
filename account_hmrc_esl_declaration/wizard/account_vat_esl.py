@@ -112,10 +112,14 @@ class AccountVatESLWizard(models.TransientModel):
             'GBP',
             company.name[:35], # NOTE truncating might not be sufficient
         ]
-        line_records = [
+        return [ title_record, header_record ] + self._detail_records()
+
+    @api.multi
+    def _detail_records(self):
+        self.ensure_one()
+        return [
             # TODO
         ]
-        return [ title_record, header_record ] + line_records
 
     @api.multi
     def esl_csv_data(self):
