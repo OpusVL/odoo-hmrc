@@ -2,7 +2,7 @@
 
 ##############################################################################
 #
-# ECSL Export for HMRC
+# Constant indicator for HMRC account
 # Copyright (C) 2015 OpusVL (<http://opusvl.com/>)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,11 +20,34 @@
 #
 ##############################################################################
 
-from . import (
-    indicator,
-    company,
-    wizard,
-    controllers,
-)
+
+{
+    'name': 'Constant indicator for HMRC account',
+    'version': '0.1',
+    'author': 'OpusVL',
+    'website': 'http://opusvl.com/',
+    'summary': 'Constant indicator for HMRC account',
+    
+    'category': 'Accounting & Finance',
+    
+    'description': """Constant indicator for HMRC account,
+""",
+    'images': [
+    ],
+    'depends': [
+        'account_hmrc_esl_declaration',
+    ],
+    'data': [
+        'res_company_view.xml',
+    ],
+    'demo': [
+    ],
+    'test': [
+    ],
+    'license': 'AGPL-3',
+    'installable': True,
+    'auto_install': False,
+
+}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

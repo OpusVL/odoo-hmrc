@@ -2,7 +2,7 @@
 
 ##############################################################################
 #
-# ECSL Export for HMRC
+# Constant indicator for HMRC account
 # Copyright (C) 2015 OpusVL (<http://opusvl.com/>)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,11 +20,6 @@
 #
 ##############################################################################
 
-from . import (
-    indicator,
-    company,
-    wizard,
-    controllers,
-)
+from . import indicator
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
