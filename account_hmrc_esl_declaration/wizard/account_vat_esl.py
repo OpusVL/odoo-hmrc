@@ -23,6 +23,7 @@
 import csv
 import re
 from operator import methodcaller
+from itertools import starmap
 
 try:
     from cStringIO import StringIO
@@ -121,9 +122,22 @@ class AccountVatESLWizard(models.TransientModel):
     @api.multi
     def _detail_records(self):
         self.ensure_one()
-        return [
-            # TODO
-        ]
+        self.env.cr.execute("""
+            SELECT COUNTRY.code, P.vat, SUM(L.credit - L.debit), L.transaction_indicator_type
+            FROM
+                account_move_line AS L
+                INNER JOIN res_partner AS P ON P.id = L.partner_id
+                INNER JOIN account_move AS M on M.id = L.move_id
+                LEFT OUTER JOIN res_country AS COUNTRY ON COUNTRY.id = P.country_id
+            WHERE
+                L.tax_code_id = %s
+                AND L.period_id = %s
+            GROUP BY COUNTRY.code, P.vat, L.transaction_indicator_type
+            """,
+            (self.chart_tax_id.id, self.period_from.id,),
+        )
+        rows = self.env.cr.fetchall()
+        return list(starmap(_convert_detail_row, rows))
 
     @api.multi
     def esl_csv_data(self):
@@ -133,6 +147,21 @@ class AccountVatESLWizard(models.TransientModel):
         csv.writer(data).writerows(self.esl_csv_records())
         return data.getvalue()
 
+def _convert_detail_row(sql_country_code, sql_vat, sql_value, sql_indicator):
+    """Convert an SQL row to a CSV detail row.
+
+    >>> _convert_detail_row('FR', 'FR123456', 1000.99, 'b2b_goods')
+    ['FR', '123456', '1000', '0']
+    """
+
+    # NOTE Unsure about the rounding - I've assumed to truncate the value to
+    #      next lowest whole pound.
+    return [
+        sql_country_code,
+        odoo_maybe(sql_vat, strip_leading_letters),
+        "%d" % sql_value,
+        _INDICATOR_MAP[sql_indicator],
+    ]
 
 def strip_leading_letters(instr):
     """Strip the leading letters off a string.
