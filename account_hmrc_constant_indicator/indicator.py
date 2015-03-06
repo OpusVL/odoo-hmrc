@@ -38,6 +38,7 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     constant_transaction_indicator_type = fields.Selection(INDICATOR_SELECTION,
+        string='ESL Transaction Indicator Type',
         required=True,
         default='b2b_goods',
         help='All line items on ESL export for this company will be assumed to have the selected type.',
