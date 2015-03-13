@@ -21,7 +21,6 @@
 ##############################################################################
 
 import csv
-import re
 from operator import methodcaller
 from itertools import starmap
 
@@ -33,6 +32,7 @@ except ImportError:
 from openerp import models, fields, api
 
 from ..maybe import odoo_maybe
+from ..util import (strip_leading_letters, remove_all_dashes_and_spaces)
 
 _INDICATOR_MAP = {
     # Mapping from transaction_indicator_type to the code used in the CSV file
@@ -109,7 +109,9 @@ class AccountVatESLWizard(models.TransientModel):
         company = self.chart_tax_id.company_id
         title_record = ['HMRC_CAT_ESL_BULK_SUBMISSION_FILE']
         header_record = [
-            odoo_maybe(company.vat, strip_leading_letters),
+            odoo_maybe(company.vat,
+                       remove_all_dashes_and_spaces,
+                       strip_leading_letters),
             company.subsidiary_identifier,
             self.declaration_year(),
             self.declaration_month(),
@@ -158,17 +160,11 @@ def _convert_detail_row(sql_country_code, sql_vat, sql_value, sql_indicator):
     #      next lowest whole pound.
     return [
         sql_country_code,
-        odoo_maybe(sql_vat, strip_leading_letters),
+        odoo_maybe(sql_vat, remove_all_dashes_and_spaces, strip_leading_letters),
         "%d" % sql_value,
         _INDICATOR_MAP[sql_indicator],
     ]
 
-def strip_leading_letters(instr):
-    """Strip the leading letters off a string.
 
-    >>> strip_leading_letters('GB12345678')
-    '12345678'
-    """
-    return re.sub(r'^[A-Z]+', r'', instr, count=1)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
