@@ -36,6 +36,7 @@
     ],
     'depends': [
         'account',
+        'base',
     ],
     'data': [
         'company_view.xml',

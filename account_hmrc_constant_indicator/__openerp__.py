@@ -36,6 +36,7 @@
     ],
     'depends': [
         'account_hmrc_esl_declaration',
+        'base',
     ],
     'data': [
         'res_company_view.xml',
