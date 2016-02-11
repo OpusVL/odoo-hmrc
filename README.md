@@ -26,6 +26,8 @@ from other aspects of the move line.
 However our current contract's requirement is to provide a constant one, which is implemented in
 the `account_hmrc_constant_indicator` module detailed below.
 
+You will find it under Accounting -> Reporting -> Generic Reporting -> Taxes -> ESL Declaration CSV
+
 ### Current status and limitations
 
 * Currently this only outputs the two header lines.  The algorithm for calculating the detail lines remains to be written.
@@ -51,6 +53,20 @@ You could also use this as an example of how to get started writing your own ver
 Apart from limitations given under individual addons' sections above:
 
 * The API and addon structure is in flux.  We may refactor these in such a way that, for example, if you implement your own `_transaction_indicator_type_compute`, and import the `INDICATOR_SELECTION` list, you may have to change the import in the future.
+
+## Testing
+
+Raise and validate an invoice to a German customer with a valid German VAT code, using tax ST11.
+
+On the ESL Declaration CSV form, choose Chart of Tax to be:
+
+```
+6 - Total value of sales ex VAT (box 8 included)
+```
+
+Choose the current Fiscal Year and Period.
+
+Click Generate ESL CSV.
 
 
 # Copyright and License
