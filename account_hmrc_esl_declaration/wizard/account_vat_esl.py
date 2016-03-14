@@ -30,6 +30,7 @@ except ImportError:
     from StringIO import StringIO
 
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 
 from ..maybe import odoo_maybe
 from ..util import (strip_leading_letters, remove_all_dashes_and_spaces)
@@ -158,6 +159,14 @@ def _convert_detail_row(sql_country_code, sql_vat, sql_value, sql_indicator):
 
     # NOTE Unsure about the rounding - I've assumed to truncate the value to
     #      next lowest whole pound.
+    if not sql_indicator:
+        raise ValidationError([
+            'Not all accounts from this period have an indicator set against the transaction_indicator_type ',
+            'This may be because you have installed this module after entries have been created ',
+            'The field is stored in the database, and computed on the fly. ',
+            'This can be fixed with a direct sql query e.g: \n',
+            "UPDATE account_move_line SET transaction_indicator_type='b2b_goods';"
+        ])
     return [
         sql_country_code,
         odoo_maybe(sql_vat, remove_all_dashes_and_spaces, strip_leading_letters),
