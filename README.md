@@ -6,11 +6,9 @@ Currently this module contains the ESL declaration and a sample module for
 deciding the Indicator Code to use on those declarations.
 
 ## `account_hmrc_esl_declaration`
-WORK IN PROGRESS: ESL export for HMRC
+ESL export for HMRC
 
-Please note this module is under development, and does not yet work.
-
-When it does, it will provide you with a tool to export a CSV file in the correct
+A tool to export a CSV file in the correct
 format for electronically submitting your ESL declaration (VAT101) to HMRC online.
 
 Current status is that the CSV headers can be got OK but there are no detail lines.
