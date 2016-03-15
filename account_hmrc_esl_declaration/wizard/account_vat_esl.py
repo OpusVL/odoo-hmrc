@@ -125,6 +125,8 @@ class AccountVatESLWizard(models.TransientModel):
     @api.multi
     def _detail_records(self):
         self.ensure_one()
+        european_country_ids = self.env.ref('base.europe').country_ids.mapped('id')
+
         self.env.cr.execute("""
             SELECT COUNTRY.code, P.vat, SUM(L.credit - L.debit), L.transaction_indicator_type
             FROM
@@ -135,9 +137,11 @@ class AccountVatESLWizard(models.TransientModel):
             WHERE
                 L.tax_code_id = %s
                 AND L.period_id = %s
+                AND COUNTRY.code <> 'GB'
+                AND P.country_id IN %s
             GROUP BY COUNTRY.code, P.vat, L.transaction_indicator_type
             """,
-            (self.chart_tax_id.id, self.period_from.id,),
+            (self.chart_tax_id.id, self.period_from.id, tuple(european_country_ids)),
         )
         rows = self.env.cr.fetchall()
         return list(starmap(_convert_detail_row, rows))
