@@ -108,7 +108,7 @@ class AccountVatESLWizard(models.TransientModel):
         self.ensure_one()
 
         company = self.chart_tax_id.company_id
-        title_record = ['HMRC_CAT_ESL_BULK_SUBMISSION_FILE']
+        title_record = ['HMRC_VAT_ESL_BULK_SUBMISSION_FILE']
         header_record = [
             odoo_maybe(company.vat,
                        remove_all_dashes_and_spaces,
