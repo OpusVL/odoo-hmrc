@@ -64,6 +64,7 @@ def odoo_maybe(value, *functions):
     """
     return _gen_maybe((None, False), value, functions)
 
+
 def _gen_maybe(nulls, value, functions):
     for fun in functions:
         if value in nulls:
@@ -71,6 +72,7 @@ def _gen_maybe(nulls, value, functions):
         else:
             value = fun(value)
     return value
+
 
 def maybe_c(*functions):
     """maybe_c(*functions)(value) -> maybe(value, *functions)

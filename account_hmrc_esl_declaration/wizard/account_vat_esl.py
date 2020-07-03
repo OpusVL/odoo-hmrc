@@ -33,7 +33,7 @@ from openerp import models, fields, api
 from openerp.exceptions import ValidationError
 
 from ..maybe import odoo_maybe
-from ..util import (strip_leading_letters, remove_all_dashes_and_spaces)
+from ..util import (strip_leading_letters, remove_all_dashes_and_spaces, strip_country_code)
 
 _INDICATOR_MAP = {
     # Mapping from transaction_indicator_type to the code used in the CSV file
@@ -41,6 +41,7 @@ _INDICATOR_MAP = {
     'triangular': '2',
     'b2b_services': '3',
 }
+
 
 class AccountVatESLWizard(models.TransientModel):
     # Based on odoo/addons/account/wizard/account_vat.py from upstream Odoo.
@@ -154,6 +155,7 @@ class AccountVatESLWizard(models.TransientModel):
         csv.writer(data).writerows(self.esl_csv_records())
         return data.getvalue()
 
+
 def _convert_detail_row(sql_country_code, sql_vat, sql_value, sql_indicator):
     """Convert an SQL row to a CSV detail row.
 
@@ -173,7 +175,7 @@ def _convert_detail_row(sql_country_code, sql_vat, sql_value, sql_indicator):
         ])
     return [
         sql_country_code,
-        odoo_maybe(sql_vat, remove_all_dashes_and_spaces, strip_leading_letters),
+        odoo_maybe(sql_vat, remove_all_dashes_and_spaces, strip_country_code),
         "%d" % sql_value,
         _INDICATOR_MAP[sql_indicator],
     ]
