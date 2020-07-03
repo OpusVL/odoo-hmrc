@@ -22,6 +22,7 @@
 
 import re
 
+
 def strip_leading_letters(instr):
     """Strip the leading letters off a string.
 
@@ -30,6 +31,11 @@ def strip_leading_letters(instr):
     """
     return re.sub(r'^[A-Z]+', r'', instr, count=1)
 
+
+def strip_country_code(instr):
+    return instr[2:]
+
+
 def remove_all_dashes_and_spaces(instr):
     """Remove dashes and spaces from a string.
 
@@ -37,6 +43,7 @@ def remove_all_dashes_and_spaces(instr):
     '12345678'
     """
     return re.sub(r'[\s-]', r'', instr)
+
 
 if __name__ == "__main__":
     import doctest
